@@ -1,0 +1,134 @@
+.college-students-page {
+    padding: 20px;
+}
+
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+    color: #333;
+    flex: 1;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.filters-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.search-filter {
+    margin-bottom: 15px;
+}
+
+.date-filters {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.date-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-filter label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.date-input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background: white;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+.students-count {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.students-count p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.students-count strong {
+    color: #667eea;
+    font-size: 18px;
+}
+
+.students-count span {
+    color: #666;
+    margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .page-header h1 {
+        font-size: 22px;
+    }
+
+    .date-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .date-filter {
+        width: 100%;
+    }
+
+    .date-input {
+        width: 100%;
+    }
+}

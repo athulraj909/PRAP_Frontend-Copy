@@ -1,0 +1,472 @@
+/* ==========================================================================
+   Student Assessment Portal - Full Styling Page
+   ========================================================================== */
+.student-portal-page {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 1. Navbar */
+.portal-navbar {
+    width: 100%;
+    background-color: #0f766e;
+    padding: 16px 32px;
+    box-sizing: border-box;
+}
+
+.portal-navbar .navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.portal-navbar .navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.portal-navbar .shield-icon {
+    width: 36px;
+    height: 36px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.portal-navbar .logo-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+}
+
+.portal-navbar .logo-subtitle {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    display: block;
+}
+
+.btn-back-home {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.btn-back-home:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* 2. Portal Hero Banner */
+.portal-hero {
+    background-color: #0f766e;
+    color: #ffffff;
+    padding: 40px 20px 60px 20px;
+    text-align: center;
+}
+
+.portal-hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.portal-badge {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 4px 14px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.portal-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+}
+
+.portal-subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 24px 0;
+    max-width: 680px;
+}
+
+.portal-features-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.portal-feature-tag {
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 3. Main Portal Content */
+.portal-main-content {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: -35px auto 60px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
+}
+
+.portal-grid {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+/* Card Styling */
+.portal-card {
+    max-width: 840px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 16px 36px rgba(15, 118, 110, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+/* Segmented Tab Switcher */
+.tab-switcher {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #f1f5f9;
+    padding: 5px;
+    border-radius: 12px;
+    margin-bottom: 28px;
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+    color: #0f766e;
+}
+
+.tab-btn.active {
+    background-color: #ffffff;
+    color: #0f766e;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Error Alert */
+.portal-error-alert {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Form Styles */
+.portal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-field-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4px;
+}
+
+.field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.field-icon {
+    position: absolute;
+    left: 14px;
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.custom-input,
+.custom-select {
+    width: 100%;
+    padding: 12px 14px 12px 40px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #0f172a;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+}
+
+.custom-input:focus,
+.custom-select:focus {
+    outline: none;
+    border-color: #0f766e;
+    box-shadow: 0 0 0 3.5px rgba(15, 118, 110, 0.12);
+}
+
+.custom-select:disabled {
+    background-color: #f8fafc;
+    cursor: not-allowed;
+    color: #94a3b8;
+}
+
+.field-hint {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* Login form wrapper */
+.login-form-wrapper {
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+    gap: 16px;
+}
+
+/* Submit row */
+.form-submit-row {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.btn-portal-primary {
+    flex: 1;
+    background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 13px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(15, 118, 110, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-portal-primary:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(15, 118, 110, 0.35);
+}
+
+.btn-portal-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-portal-secondary {
+    padding: 13px 20px;
+    background-color: #f1f5f9;
+    color: #475569;
+    font-size: 15px;
+    font-weight: 600;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-portal-secondary:hover {
+    background-color: #e2e8f0;
+}
+
+/* 4. Side Info Card */
+.portal-side-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 16px 36px rgba(15, 118, 110, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+
+.side-card-header {
+    margin-bottom: 24px;
+}
+
+.side-card-tag {
+    font-size: 11px;
+    font-weight: 800;
+    color: #0f766e;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.side-card-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 4px 0 0 0;
+}
+
+.guidelines-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.guideline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.guideline-icon {
+    width: 38px;
+    height: 38px;
+    background-color: #ccfbf1;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.guideline-content h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+
+.guideline-content p {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #64748b;
+    margin: 0;
+}
+
+.side-card-footer-box {
+    background-color: #f0fdfa;
+    border: 1px solid #ccfbf1;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: center;
+    font-size: 12px;
+    color: #0f766e;
+    font-weight: 500;
+}
+
+.side-card-footer-box p {
+    margin: 0;
+}
+
+/* 5. Portal Footer */
+.portal-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+.portal-footer .footer-copyright {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .portal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .portal-hero {
+        padding: 30px 16px 50px 16px;
+    }
+
+    .portal-title {
+        font-size: 28px;
+    }
+
+    .portal-card {
+        padding: 24px 18px;
+    }
+}

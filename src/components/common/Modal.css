@@ -1,0 +1,77 @@
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+.modal-container{
+
+    width:550px;
+    max-width:95%;
+
+    background:#fff;
+
+    border-radius:8px;
+
+    overflow:hidden;
+
+}
+
+.modal-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 20px;
+
+    border-bottom:1px solid #e5e5e5;
+
+}
+
+.modal-body{
+
+    padding:20px;
+
+}
+
+.modal-body-scrollable {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.modal-close{
+
+    border:none;
+    background:none;
+
+    cursor:pointer;
+
+    font-size:22px;
+
+}

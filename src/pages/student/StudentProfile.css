@@ -1,0 +1,415 @@
+/* ==========================================================================
+   Student Profile Page Styles
+   ========================================================================== */
+.student-profile-page {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 1. Navbar */
+.sp-navbar {
+    width: 100%;
+    background-color: #0f766e;
+    color: #ffffff;
+    padding: 0 32px;
+    box-sizing: border-box;
+}
+
+.sp-navbar-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.sp-navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    height: 100%;
+}
+
+.sp-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.sp-shield-icon {
+    width: 32px;
+    height: 32px;
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.sp-logo-text {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.sp-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    height: 100%;
+}
+
+.sp-nav-link {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0 4px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.sp-nav-link:hover {
+    color: #ffffff;
+}
+
+.sp-nav-link.active {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.sp-nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #ffffff;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.sp-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sp-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.sp-user-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.sp-user-detail {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 400;
+}
+
+.sp-btn-logout {
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.sp-btn-logout:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* 2. Main Content */
+.sp-main-container {
+    max-width: 900px;
+    width: 100%;
+    margin: 36px auto 60px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sp-btn-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: #0f766e;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.2s ease;
+}
+
+.sp-btn-back:hover {
+    color: #115e59;
+}
+
+/* Profile Header */
+.sp-profile-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 10px 30px rgba(22, 141, 141, 0.25);
+    color: var(--white);
+}
+
+.sp-profile-avatar {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--white);
+}
+
+.sp-profile-info h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.sp-profile-info p {
+    margin: 0;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+}
+
+/* Profile Content */
+.sp-profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.sp-section-card {
+    background-color: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.sp-section-card h2 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.sp-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.sp-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sp-detail-label {
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sp-detail-value {
+    font-size: 15px;
+    color: #0f172a;
+    font-weight: 500;
+}
+
+.sp-status-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.sp-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sp-status-badge.completed {
+    background-color: #dcfce7;
+    color: #16a34a;
+    border: 1.5px solid #86efac;
+}
+
+.sp-status-badge.pending {
+    background-color: #ffedd5;
+    color: #ea580c;
+    border: 1.5px solid #fdba74;
+}
+
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+/* Responsive queries */
+@media (max-width: 768px) {
+    .sp-navbar {
+        padding: 0 16px;
+    }
+
+    .sp-navbar-container {
+        height: auto;
+        padding: 12px 0;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .sp-navbar-left {
+        width: 100%;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .sp-nav-links {
+        gap: 12px;
+    }
+
+    .sp-nav-link {
+        font-size: 12.5px;
+    }
+
+    .sp-main-container {
+        margin: 24px auto 40px auto;
+    }
+
+    .sp-profile-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px;
+    }
+
+    .sp-profile-avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .sp-profile-info h1 {
+        font-size: 24px;
+    }
+
+    .sp-profile-info p {
+        font-size: 14px;
+    }
+
+    .sp-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sp-section-card {
+        padding: 20px;
+    }
+
+    .sp-status-row {
+        flex-direction: column;
+    }
+
+    .sp-status-badge {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .sp-profile-header {
+        padding: 24px 20px;
+        gap: 16px;
+    }
+
+    .sp-profile-avatar {
+        width: 56px;
+        height: 56px;
+    }
+
+    .sp-profile-avatar svg {
+        width: 32px;
+        height: 32px;
+    }
+
+    .sp-profile-info h1 {
+        font-size: 20px;
+    }
+
+    .sp-profile-info p {
+        font-size: 13px;
+    }
+
+    .sp-section-card {
+        padding: 16px;
+    }
+
+    .sp-section-card h2 {
+        font-size: 16px;
+    }
+
+    .sp-detail-label {
+        font-size: 12px;
+    }
+
+    .sp-detail-value {
+        font-size: 14px;
+    }
+}

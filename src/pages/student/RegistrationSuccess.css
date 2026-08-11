@@ -1,0 +1,319 @@
+.registration-success-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.registration-success-container {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 80px;
+    color: var(--white);
+    margin-bottom: 20px;
+    animation: checkmark 0.5s ease-in-out;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-content {
+    padding: 40px;
+}
+
+.success-content h1 {
+    font-size: 32px;
+    color: var(--gray-800);
+    margin-bottom: 15px;
+}
+
+.success-message {
+    font-size: 16px;
+    color: var(--gray-600);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.student-details {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 24px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+}
+
+.student-details h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 12px;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px 14px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.detail-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 0.4px;
+}
+
+.detail-value {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0f172a;
+    word-break: break-word;
+}
+
+.assessment-instructions {
+    text-align: left;
+    margin-bottom: 30px;
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.assessment-instructions h3 {
+    font-size: 18px;
+    color: var(--white);
+    margin-bottom: 15px;
+}
+
+.assessment-instructions .steps-list li {
+    color: var(--white);
+}
+
+.next-steps {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.next-steps h3 {
+    font-size: 18px;
+    color: var(--gray-800);
+    margin-bottom: 15px;
+}
+
+.steps-list {
+    list-style: none;
+    padding: 0;
+}
+
+.steps-list li {
+    padding: 8px 0;
+    color: var(--gray-600);
+    font-size: 15px;
+}
+
+.success-actions {
+    display: flex;
+    justify-content: center;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .registration-success-container {
+        max-width: 550px;
+    }
+
+    .success-icon {
+        font-size: 70px;
+    }
+
+    .success-content {
+        padding: 35px;
+    }
+
+    .success-content h1 {
+        font-size: 28px;
+    }
+
+    .success-message {
+        font-size: 15px;
+    }
+
+    .student-details {
+        padding: 18px;
+    }
+
+    .student-details h3 {
+        font-size: 17px;
+    }
+
+    .detail-row {
+        padding: 7px 0;
+    }
+
+    .next-steps h3 {
+        font-size: 17px;
+    }
+
+    .steps-list li {
+        font-size: 14px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .registration-success-page {
+        padding: 30px 15px;
+    }
+
+    .registration-success-container {
+        max-width: 100%;
+    }
+
+    .success-icon {
+        font-size: 60px;
+        margin-bottom: 15px;
+    }
+
+    .success-content {
+        padding: 25px;
+    }
+
+    .success-content h1 {
+        font-size: 24px;
+    }
+
+    .success-message {
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .student-details {
+        padding: 15px;
+        margin-bottom: 25px;
+    }
+
+    .student-details h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .details-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 8px 10px;
+    }
+
+    .detail-label {
+        font-size: 10.5px;
+    }
+
+    .detail-value {
+        font-size: 13px;
+    }
+
+    .next-steps {
+        margin-bottom: 25px;
+    }
+
+    .next-steps h3 {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .steps-list li {
+        font-size: 13px;
+        padding: 6px 0;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .registration-success-page {
+        padding: 20px 10px;
+    }
+
+    .success-icon {
+        font-size: 50px;
+        margin-bottom: 12px;
+    }
+
+    .success-content {
+        padding: 20px;
+    }
+
+    .success-content h1 {
+        font-size: 20px;
+    }
+
+    .success-message {
+        font-size: 13px;
+        margin-bottom: 20px;
+    }
+
+    .student-details {
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+    }
+
+    .student-details h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .detail-row {
+        padding: 5px 0;
+    }
+
+    .detail-label {
+        font-size: 12px;
+    }
+
+    .detail-value {
+        font-size: 13px;
+    }
+
+    .next-steps {
+        margin-bottom: 20px;
+    }
+
+    .next-steps h3 {
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .steps-list li {
+        font-size: 12px;
+        padding: 5px 0;
+    }
+}

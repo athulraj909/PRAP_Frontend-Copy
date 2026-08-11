@@ -1,0 +1,29 @@
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.input-group input {
+  padding: 12px;
+  border: 2px solid var(--gray-300);
+  border-radius: 8px;
+  outline: none;
+  background: var(--white);
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-color);
+}
+
+.input-group input:disabled {
+  background: var(--gray-100);
+  cursor: not-allowed;
+}

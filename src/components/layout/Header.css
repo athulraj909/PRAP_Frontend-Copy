@@ -1,0 +1,162 @@
+/* ===============================
+   HEADER
+================================= */
+
+.header {
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    box-sizing: border-box;
+}
+
+/* ===============================
+   LEFT
+================================= */
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* ===============================
+   RIGHT
+================================= */
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ===============================
+   Notification
+================================= */
+
+.notification-btn {
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: all .25s ease;
+}
+
+.notification-btn:hover {
+    background: #e2e8f0;
+}
+
+/* ===============================
+   User Profile
+================================= */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    cursor: pointer;
+
+    padding: 6px 12px;
+
+    border-radius: 10px;
+
+    transition: .25s;
+}
+
+.user-profile:hover {
+    background: #f8fafc;
+}
+
+/* ===============================
+   Avatar
+================================= */
+
+.user-avatar {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    user-select: none;
+}
+
+/* ===============================
+   User Details
+================================= */
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-details h4 {
+    margin: 0;
+    font-size: 15px;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.user-details p {
+    margin: 2px 0 0;
+    color: #64748b;
+    font-size: 13px;
+}
+
+/* ===============================
+   Responsive
+================================= */
+
+@media (max-width:768px) {
+
+    .header {
+        padding: 0 15px;
+    }
+
+    .header-left h2 {
+        font-size: 20px;
+    }
+
+    .user-details {
+        display: none;
+    }
+
+    .header-right {
+        gap: 10px;
+    }
+
+}

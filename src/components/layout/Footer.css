@@ -1,0 +1,58 @@
+/* ==================================
+   FOOTER
+================================== */
+
+.footer {
+    height: 60px;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    color: #64748b;
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+/* ==================================
+   LEFT
+================================== */
+
+.footer-left {
+    display: flex;
+    align-items: center;
+}
+
+/* ==================================
+   RIGHT
+================================== */
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* ==================================
+   RESPONSIVE
+================================== */
+
+@media (max-width: 768px) {
+
+    .footer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+
+        height: auto;
+        padding: 15px;
+        text-align: center;
+    }
+
+}
