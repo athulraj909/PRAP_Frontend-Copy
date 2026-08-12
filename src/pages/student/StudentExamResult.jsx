@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../../components/common/Button";
 import jsPDF from "jspdf";
+import { getExamResults } from "../../services/studentService";
 
 import "./StudentExamResult.css";
 import "./StudentDashboard.css";
@@ -10,24 +11,63 @@ function StudentExamResult() {
     const navigate = useNavigate();
     const [result, setResult] = useState(null);
     const [student, setStudent] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const session = localStorage.getItem("studentSession");
-        if (!session) {
-            navigate("/");
-            return;
-        }
+        const loadResult = async () => {
+            const session = localStorage.getItem("studentSession");
+            if (!session) {
+                navigate("/");
+                return;
+            }
 
-        const studentData = JSON.parse(session);
-        setStudent(studentData);
+            const studentData = JSON.parse(session);
+            setStudent(studentData);
 
-        const resultData = localStorage.getItem(`examResult_${studentData.mobile}`);
-        if (!resultData) {
-            navigate("/student-dashboard");
-            return;
-        }
+            // First try localStorage for immediate display after exam submission
+            const localResultData = localStorage.getItem(`examResult_${studentData.mobile}`);
+            
+            // Also try to fetch from backend
+            try {
+                const backendResponse = await getExamResults(studentData.mobile);
+                if (backendResponse.success && backendResponse.results && backendResponse.results.length > 0) {
+                    // Use the most recent result from backend
+                    const latestResult = backendResponse.results[0];
+                    const backendResult = {
+                        student: studentData,
+                        submittedAt: latestResult.completed_at,
+                        reason: latestResult.answers?.reason || "Submitted",
+                        totalQuestions: latestResult.total_marks,
+                        score: latestResult.score,
+                        answeredCount: Object.keys(latestResult.answers?.answers || {}).length,
+                        percentage: latestResult.percentage,
+                        timeTaken: latestResult.answers?.timeTaken || 0,
+                        categoryPerformance: latestResult.category_breakdown || [],
+                        review: latestResult.answers?.review || [],
+                    };
+                    setResult(backendResult);
+                } else if (localResultData) {
+                    // Fallback to localStorage if backend has no results
+                    setResult(JSON.parse(localResultData));
+                } else {
+                    navigate("/student-dashboard");
+                    return;
+                }
+            } catch (error) {
+                console.error("Failed to fetch results from backend:", error);
+                // Fallback to localStorage on error
+                if (localResultData) {
+                    setResult(JSON.parse(localResultData));
+                } else {
+                    navigate("/student-dashboard");
+                    return;
+                }
+            }
+            
+            setLoading(false);
+        };
 
-        setResult(JSON.parse(resultData));
+        loadResult();
     }, [navigate]);
 
     const downloadPDF = () => {
@@ -141,11 +181,24 @@ function StudentExamResult() {
         doc.save(`PRAP_Result_${student.name.replace(/\s+/g, "_")}_${new Date().toISOString().split('T')[0]}.pdf`);
     };
 
-    if (!result) {
+    if (loading) {
         return (
             <div className="exam-result-page">
                 <div className="exam-result-loading">
                     <p>Loading your result...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!result) {
+        return (
+            <div className="exam-result-page">
+                <div className="exam-result-loading">
+                    <p>No result found. Please complete an exam first.</p>
+                    <Button type="button" variant="primary" onClick={() => navigate('/student-dashboard')}>
+                        Go to Dashboard
+                    </Button>
                 </div>
             </div>
         );

@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 
 import Button from "../../components/common/Button";
 import questionService from "../../services/questionService";
-import assessmentHistoryService from "../../services/assessmentHistoryService";
 import assessmentCategoryService from "../../services/assessmentCategoryService";
+import { submitExam } from "../../services/studentService";
 import { getApplicableCategoriesForCourse } from "../../utils/courseClassification";
 
 import "./StudentExam.css";
@@ -25,10 +25,10 @@ const shuffleArray = (array) => {
 
 const buildRandomExamQuestions = (questions, maxCount) => {
     const categoryGroups = questions.reduce((groups, question) => {
-        if (!groups[question.category]) {
-            groups[question.category] = [];
+        if (!groups[question.categoryName]) {
+            groups[question.categoryName] = [];
         }
-        groups[question.category].push(question);
+        groups[question.categoryName].push(question);
         return groups;
     }, {});
 
@@ -120,7 +120,7 @@ function StudentExam() {
 
                 // Filter questions by applicable categories
                 const filteredQuestions = activeQuestions.filter(question => 
-                    applicableCategoryNames.includes(question.category)
+                    applicableCategoryNames.includes(question.categoryName)
                 );
 
                 if (filteredQuestions.length === 0) {
@@ -162,7 +162,7 @@ function StudentExam() {
                 setQuestions(selectedQuestions);
             } catch (error) {
                 console.error("Failed to load exam questions:", error);
-                toast.error("Unable to load the assessment questions.");
+                toast.error(error.message || "Unable to load the assessment questions.");
                 navigate("/student-dashboard");
             } finally {
                 setLoading(false);
@@ -227,7 +227,7 @@ function StudentExam() {
         const timeTaken = EXAM_DURATION_SECONDS - Math.max(currentTimeLeft, 0);
 
         const categoryStats = questions.reduce((stats, question) => {
-            const category = question.category || "General";
+            const category = question.categoryName || "General";
             if (!stats[category]) {
                 stats[category] = {
                     category,
@@ -276,7 +276,7 @@ function StudentExam() {
 
             return {
                 id: question.id,
-                category: question.category || "General",
+                category: question.categoryName || "General",
                 question: question.question,
                 options: {
                     optionA: question.optionA,
@@ -293,51 +293,51 @@ function StudentExam() {
             };
         });
 
-        const resultPayload = {
+        const examPayload = {
             student: studentSession,
-            submittedAt: new Date().toISOString(),
-            reason,
+            answers: currentAnswers,
             totalQuestions: questions.length,
             score,
-            answeredCount,
             percentage,
             timeTaken,
             categoryPerformance,
             review,
+            reason,
         };
 
-        const draftOwnerKey = studentMobile || studentSession?.mobile || "student";
-        const resultKey = `examResult_${draftOwnerKey}`;
-        localStorage.setItem(resultKey, JSON.stringify(resultPayload));
+        try {
+            // Submit to backend
+            await submitExam(examPayload);
 
-        // Save simplified performance data to assessment history
-        const historyRecord = {
-            studentMobile: draftOwnerKey,
-            studentName: studentSession?.name || "Student",
-            college: studentSession?.college || "",
-            course: studentSession?.course || "",
-            totalScore: score,
-            totalQuestions: questions.length,
-            percentage,
-            timeTaken,
-            submittedAt: new Date().toISOString(),
-            categoryPerformance: categoryPerformance.map(cat => ({
-                category: cat.category,
-                correct: cat.correct,
-                total: cat.total,
-                percentage: cat.percentage,
-            })),
-        };
+            // Also save to localStorage for result page
+            const draftOwnerKey = studentMobile || studentSession?.mobile || "student";
+            const resultKey = `examResult_${draftOwnerKey}`;
+            localStorage.setItem(resultKey, JSON.stringify({
+                student: studentSession,
+                submittedAt: new Date().toISOString(),
+                reason,
+                totalQuestions: questions.length,
+                score,
+                answeredCount,
+                percentage,
+                timeTaken,
+                categoryPerformance,
+                review,
+            }));
 
-        await assessmentHistoryService.addAssessmentRecord(historyRecord);
+            // Save simplified performance data to assessment history
+const draftKey = studentMobile ? `examDraft_${studentMobile}` : (studentSession?.mobile ? `examDraft_${studentSession.mobile}` : null);
+            if (draftKey) {
+                localStorage.removeItem(draftKey);
+            }
 
-        const draftKey = studentMobile ? `examDraft_${studentMobile}` : (studentSession?.mobile ? `examDraft_${studentSession.mobile}` : null);
-        if (draftKey) {
-            localStorage.removeItem(draftKey);
+            toast.success("Assessment submitted successfully.");
+            navigate("/student-exam-result");
+        } catch (error) {
+            console.error("Failed to submit exam:", error);
+            toast.error("Failed to submit exam. Please try again.");
+            setSubmitting(false);
         }
-
-        toast.success("Assessment submitted successfully.");
-        navigate("/student-exam-result");
     }, [questions, studentMobile, studentSession, submitting, navigate]);
 
     useEffect(() => {
@@ -506,7 +506,7 @@ function StudentExam() {
                     <div className="exam-main">
                         <section className="exam-question-card" ref={questionCardRef}>
                             <div className="question-card-header">
-                                <span className="question-category">{currentQuestion.category}</span>
+                                <span className="question-category">{currentQuestion.categoryName}</span>
                                 <span className="question-mark">1 mark</span>
                             </div>
                             <h2>{currentQuestion.question}</h2>

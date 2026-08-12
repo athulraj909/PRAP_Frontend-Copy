@@ -115,6 +115,36 @@ export const deleteStudent = async (id) => {
     return true;
 };
 
+export const submitExam = async (examData) => {
+    const response = await fetch(`${API_BASE_URL}/student/exam/submit/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(examData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || 'Failed to submit exam');
+    }
+
+    return data;
+};
+
+export const getExamResults = async (mobile) => {
+    const response = await fetch(`${API_BASE_URL}/student/exam/results/?mobile=${mobile}`);
+    
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch exam results');
+    }
+
+    return data;
+};
+
 export default {
     registerStudentApi,
     loginStudentApi,
@@ -124,4 +154,6 @@ export default {
     addStudent,
     updateStudent,
     deleteStudent,
+    submitExam,
+    getExamResults,
 };

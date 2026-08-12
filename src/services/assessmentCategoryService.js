@@ -6,12 +6,18 @@ const getAuthHeaders = () => {
 };
 
 export const getAssessmentCategories = async () => {
-    const response = await fetch(`${API_BASE_URL}/assessment-categories/`, {
-        headers: getAuthHeaders(),
-    });
+    let response = await fetch(`${API_BASE_URL}/public/assessment-categories/`);
+
+    if (!response.ok) {
+        response = await fetch(`${API_BASE_URL}/assessment-categories/`, {
+            headers: getAuthHeaders(),
+        });
+    }
+
     if (!response.ok) {
         throw new Error('Failed to fetch assessment categories');
     }
+
     const data = await response.json();
     return data;
 };

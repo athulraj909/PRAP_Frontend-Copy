@@ -97,7 +97,7 @@ function ExamInstructions() {
                             <div className="stat-item">
                                 <div className="stat-icon">⏱️</div>
                                 <div className="stat-content">
-                                    <div className="stat-value">5</div>
+                                    <div className="stat-value">100</div>
                                     <div className="stat-label">Minutes</div>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@ function ExamInstructions() {
                             <li className="instruction-item">
                                 <span className="instruction-number">2</span>
                                 <span className="instruction-text">
-                                    Total duration of the exam is <strong>5 minutes</strong>
+                                    Total duration of the exam is <strong>100 minutes</strong>
                                 </span>
                             </li>
                             <li className="instruction-item">
