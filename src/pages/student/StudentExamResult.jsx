@@ -213,10 +213,8 @@ function StudentExamResult() {
                 <div className="sd-navbar-container">
                     <div className="sd-navbar-left">
                         <div className="sd-logo">
-                            <div className="sd-shield-icon">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                                </svg>
+                            <div className="sd-logo-icon">
+                                <img src="/assets/logo-final.svg" alt="PRAP Logo" />
                             </div>
                             <span className="sd-logo-text">PRAP</span>
                         </div>
@@ -243,17 +241,13 @@ function StudentExamResult() {
                     </div>
                     <div className="result-hero-content">
                         <h1>Assessment Result</h1>
-                        <p>Campus Placement Drive 2025</p>
+                        
                         <div className="result-status">
-                            <span className={percentage >= 50 ? "status-pass" : "status-fail"}>
-                                {percentage >= 50 ? "PASS" : "FAIL"}
-                            </span>
+                            
                             <strong>{score}/{totalQuestions} marks</strong>
                         </div>
                     </div>
-                    <button className="download-pdf-btn" type="button" onClick={downloadPDF}>
-                        Download PDF
-                    </button>
+                    
                 </div>
 
                 <div className="result-summary">
@@ -335,15 +329,11 @@ function StudentExamResult() {
                 </div>
 
                 <div className="result-actions">
-                    <Button type="button" variant="secondary" onClick={() => navigate('/')}>
-                        Return to Home
-                    </Button>
+                   
                     <Button type="button" variant="secondary" onClick={() => navigate('/student-dashboard')}>
                         Back to Dashboard
                     </Button>
-                    <Button type="button" variant="primary" onClick={() => navigate('/student-exam')}>
-                        Start New Exam
-                    </Button>
+                   
                 </div>
             </div>
         </div>

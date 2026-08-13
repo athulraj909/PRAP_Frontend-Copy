@@ -80,10 +80,8 @@ function Login() {
             <div className="login-container">
                 {/* Logo Section */}
                 <div className="login-logo-section">
-                    <div className="shield-icon-large">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                        </svg>
+                    <div className="logo-icon-large">
+                        <img src="/assets/logo-final.svg" alt="PRAP Logo" />
                     </div>
                     <h1 className="login-title">PRAP Admin</h1>
                     <p className="login-subtitle">Placement Readiness Assessment Platform</p>

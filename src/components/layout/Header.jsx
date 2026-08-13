@@ -6,7 +6,7 @@ import { getCurrentUser } from "../../services/authService";
 
 import "./Header.css";
 
-function Header() {
+function Header({ toggleMobileSidebar }) {
 
     const { pathname } = useLocation();
 
@@ -23,6 +23,10 @@ function Header() {
         <header className="header">
 
             <div className="header-left">
+
+                <button className="mobile-menu-btn" onClick={toggleMobileSidebar}>
+                    ☰
+                </button>
 
                 <h2>{title}</h2>
 

@@ -10,11 +10,16 @@ import "./DashboardLayout.css";
 function DashboardLayout() {
 
     const [collapsed, setCollapsed] = useState(false);
+    const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
 
         setCollapsed((prev) => !prev);
 
+    };
+
+    const toggleMobileSidebar = () => {
+        setMobileSidebarOpen((prev) => !prev);
     };
 
     return (
@@ -24,6 +29,8 @@ function DashboardLayout() {
             <Sidebar
                 collapsed={collapsed}
                 toggleSidebar={toggleSidebar}
+                mobileSidebarOpen={mobileSidebarOpen}
+                toggleMobileSidebar={toggleMobileSidebar}
             />
 
             <div
@@ -32,7 +39,7 @@ function DashboardLayout() {
                 }`}
             >
 
-                <Header />
+                <Header toggleMobileSidebar={toggleMobileSidebar} />
 
                 <main className="dashboard-content">
 

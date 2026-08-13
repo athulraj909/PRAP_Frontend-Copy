@@ -27,6 +27,8 @@ import DistrictList from "../pages/masters/district/DistrictList";
 import CollegeList from "../pages/masters/college/CollegeList";
 import CollegeStudents from "../pages/masters/college/CollegeStudents";
 import StudentPerformanceDetail from "../pages/masters/college/StudentPerformanceDetail";
+import StudentList from "../pages/students/StudentList";
+import Settings from "../pages/settings/Settings"
 import CourseList from "../pages/masters/course/CourseList";
 import AssessmentCategoryList from "../pages/masters/assessment-category/AssessmentCategoryList";
 import QuestionList from "../pages/questions/QuestionList";
@@ -139,11 +141,6 @@ function AppRoutes() {
                         />
 
                         <Route
-                            path="/masters/colleges/:collegeId/students/:studentMobile"
-                            element={<StudentPerformanceDetail />}
-                        />
-
-                        <Route
                             path="/masters/courses"
                             element={<CourseList />}
                         />
@@ -159,7 +156,12 @@ function AppRoutes() {
 
                         <Route
                             path="/students"
-                            element={<Dashboard />}
+                            element={<StudentList />}
+                        />
+
+                        <Route
+                            path="/students/:studentMobile"
+                            element={<StudentPerformanceDetail />}
                         />
 
                         {/* ========================= */}
@@ -195,7 +197,7 @@ function AppRoutes() {
 
                         <Route
                             path="/settings"
-                            element={<Dashboard />}
+                            element={<Settings />}
                         />
 
                     </Route>

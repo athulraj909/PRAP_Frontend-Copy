@@ -75,6 +75,8 @@ const menuItems = [
 function Sidebar({
     collapsed,
     toggleSidebar,
+    mobileSidebarOpen,
+    toggleMobileSidebar,
 }) {
 
     const { logout } = useAuth();
@@ -103,6 +105,8 @@ function Sidebar({
         <aside
             className={`sidebar ${
                 collapsed ? "collapsed" : ""
+            } ${
+                mobileSidebarOpen ? "mobile-open" : ""
             }`}
         >
 
@@ -117,6 +121,13 @@ function Sidebar({
                     onClick={toggleSidebar}
                 >
                     ☰
+                </button>
+
+                <button
+                    className="mobile-close-btn"
+                    onClick={toggleMobileSidebar}
+                >
+                    ✕
                 </button>
 
             </div>

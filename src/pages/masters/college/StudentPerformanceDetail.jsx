@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title, PointElement, LineElement } from "chart.js";
 import { Doughnut, Bar, Line } from "react-chartjs-2";
@@ -16,10 +16,11 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 function StudentPerformanceDetail() {
     const navigate = useNavigate();
     const location = useLocation();
+    const { studentMobile: urlStudentMobile } = useParams();
     
     const student = location.state?.student || {};
     const collegeName = location.state?.collegeName || "";
-    const studentMobile = location.state?.student?.mobile || "";
+    const studentMobile = urlStudentMobile || location.state?.student?.mobile || "";
     
     const [assessmentHistory, setAssessmentHistory] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -112,7 +113,14 @@ function StudentPerformanceDetail() {
     };
 
     const handleBack = () => {
-        navigate(`/masters/colleges/${collegeName}/students`, { state: { collegeName } });
+        // Check if we came from college students or general students
+        const fromCollege = location.state?.fromCollege;
+        
+        if (fromCollege && collegeName) {
+            navigate(`/masters/colleges/${collegeName}/students`, { state: { collegeName } });
+        } else {
+            navigate("/students");
+        }
     };
 
     // Chart data configurations

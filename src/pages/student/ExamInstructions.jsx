@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/Button";
+import examSettingsService from "../../services/examSettingsService";
 
 import "./ExamInstructions.css";
 
@@ -8,6 +9,10 @@ function ExamInstructions() {
     const navigate = useNavigate();
     const [studentSession, setStudentSession] = useState(null);
     const [countdown, setCountdown] = useState(10);
+    const [examSettings, setExamSettings] = useState({
+        question_count: 100,
+        exam_duration_minutes: 100,
+    });
 
     useEffect(() => {
         // Get student session from localStorage
@@ -19,6 +24,18 @@ function ExamInstructions() {
             navigate("/");
         }
     }, [navigate]);
+
+    useEffect(() => {
+        const loadExamSettings = async () => {
+            try {
+                const settings = await examSettingsService.getExamSettings();
+                setExamSettings(settings);
+            } catch (error) {
+                console.error("Failed to load exam settings, using defaults:", error);
+            }
+        };
+        loadExamSettings();
+    }, []);
 
     useEffect(() => {
         // Countdown timer before enabling start button
@@ -90,14 +107,14 @@ function ExamInstructions() {
                             <div className="stat-item">
                                 <div className="stat-icon">📝</div>
                                 <div className="stat-content">
-                                    <div className="stat-value">100</div>
+                                    <div className="stat-value">{examSettings.question_count}</div>
                                     <div className="stat-label">Questions</div>
                                 </div>
                             </div>
                             <div className="stat-item">
                                 <div className="stat-icon">⏱️</div>
                                 <div className="stat-content">
-                                    <div className="stat-value">100</div>
+                                    <div className="stat-value">{examSettings.exam_duration_minutes}</div>
                                     <div className="stat-label">Minutes</div>
                                 </div>
                             </div>
@@ -124,13 +141,13 @@ function ExamInstructions() {
                             <li className="instruction-item">
                                 <span className="instruction-number">1</span>
                                 <span className="instruction-text">
-                                    The exam consists of <strong>100 multiple-choice questions (MCQ)</strong>
+                                    The exam consists of <strong>{examSettings.question_count} multiple-choice questions (MCQ)</strong>
                                 </span>
                             </li>
                             <li className="instruction-item">
                                 <span className="instruction-number">2</span>
                                 <span className="instruction-text">
-                                    Total duration of the exam is <strong>100 minutes</strong>
+                                    Total duration of the exam is <strong>{examSettings.exam_duration_minutes} minutes</strong>
                                 </span>
                             </li>
                             <li className="instruction-item">

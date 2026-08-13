@@ -79,31 +79,43 @@ function CollegeStudents() {
     };
 
     const handleViewResult = (student) => {
-        navigate(`/masters/colleges/${collegeName}/students/${student.mobile}`, {
+        navigate(`/students/${student.mobile}`, {
             state: {
                 student,
                 collegeName,
+                fromCollege: true,
             },
         });
     };
 
     const handleExport = () => {
+        // Helper function to escape CSV values
+        const escapeCSV = (value) => {
+            if (value === null || value === undefined) return "";
+            const stringValue = String(value);
+            // If value contains comma, quote, or newline, wrap in quotes and escape quotes
+            if (stringValue.includes(",") || stringValue.includes('"') || stringValue.includes("\n")) {
+                return `"${stringValue.replace(/"/g, '""')}"`;
+            }
+            return stringValue;
+        };
+
         // Create CSV content
         const headers = ["Name", "Email", "Mobile", "District", "College", "Course", "Registered Date", "Total Assessments", "Avg Percentage", "Latest Percentage", "Latest Assessment Date"];
         const rows = filteredStudents.map(student => {
             const perf = studentPerformance[student.mobile] || {};
             return [
-                student.name,
-                student.email,
-                student.mobile,
-                student.district,
-                student.college,
-                student.course,
-                new Date(student.registeredAt).toLocaleDateString(),
-                perf.totalAssessments || 0,
-                perf.avgPercentage || 0,
-                perf.latestPercentage || 0,
-                perf.latestDate ? new Date(perf.latestDate).toLocaleDateString() : "N/A"
+                escapeCSV(student.name),
+                escapeCSV(student.email),
+                escapeCSV(student.mobile),
+                escapeCSV(student.district),
+                escapeCSV(student.college),
+                escapeCSV(student.course),
+                escapeCSV(new Date(student.registeredAt).toLocaleDateString()),
+                escapeCSV(perf.totalAssessments || 0),
+                escapeCSV(perf.avgPercentage || 0),
+                escapeCSV(perf.latestPercentage || 0),
+                escapeCSV(perf.latestDate ? new Date(perf.latestDate).toLocaleDateString() : "N/A")
             ];
         });
 

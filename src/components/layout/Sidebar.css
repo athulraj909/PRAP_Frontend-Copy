@@ -59,6 +59,23 @@
     background: rgba(255,255,255,0.12);
 }
 
+.mobile-close-btn {
+    display: none;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background 0.3s;
+}
+
+.mobile-close-btn:hover {
+    background: rgba(255,255,255,0.12);
+}
+
 /* ==========================
    MENU
 ========================== */
@@ -242,10 +259,44 @@
 .sidebar{
     transform:translateX(-100%);
     transition:transform .3s ease;
+    width: 280px;
 }
 
 .sidebar.mobile-open{
     transform:translateX(0);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+}
+
+.sidebar.collapsed{
+    width: 280px;
+}
+
+.sidebar.collapsed .sidebar-header{
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.sidebar.collapsed .collapse-btn{
+    position: static;
+}
+
+.sidebar.collapsed .menu-item,
+.sidebar.collapsed .menu-parent{
+    justify-content: space-between;
+    padding: 14px 16px;
+}
+
+.sidebar.collapsed .menu-title,
+.sidebar.collapsed .submenu{
+    display: block;
+}
+
+.sidebar.collapsed .sidebar-footer{
+    display: block;
+}
+
+.mobile-close-btn{
+    display: block;
 }
 
 }

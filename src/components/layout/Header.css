@@ -27,6 +27,7 @@
 .header-left {
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 
 .header-left h2 {
@@ -34,6 +35,23 @@
     font-size: 24px;
     font-weight: 600;
     color: #1e293b;
+}
+
+.mobile-menu-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background: #f1f5f9;
+    color: #1e293b;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background 0.3s;
+}
+
+.mobile-menu-btn:hover {
+    background: #e2e8f0;
 }
 
 /* ===============================
@@ -149,6 +167,10 @@
 
     .header-left h2 {
         font-size: 20px;
+    }
+
+    .mobile-menu-btn {
+        display: block;
     }
 
     .user-details {

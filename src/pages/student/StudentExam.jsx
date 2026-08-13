@@ -7,12 +7,11 @@ import questionService from "../../services/questionService";
 import assessmentCategoryService from "../../services/assessmentCategoryService";
 import { submitExam } from "../../services/studentService";
 import { getApplicableCategoriesForCourse } from "../../utils/courseClassification";
+import examSettingsService from "../../services/examSettingsService";
 
 import "./StudentExam.css";
 
-const EXAM_DURATION_SECONDS = 100 * 60;
 const MAX_WARNING_COUNT = 3;
-const MAX_QUESTIONS_PER_EXAM = 100;
 
 const shuffleArray = (array) => {
     const copy = [...array];
@@ -59,10 +58,14 @@ function StudentExam() {
     const [questions, setQuestions] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState({});
-    const [timeLeft, setTimeLeft] = useState(EXAM_DURATION_SECONDS);
+    const [timeLeft, setTimeLeft] = useState(6000); // Default 100 minutes
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [warningCount, setWarningCount] = useState(0);
+    const [examSettings, setExamSettings] = useState({
+        question_count: 100,
+        exam_duration_minutes: 100,
+    });
 
     const warningCountRef = useRef(0);
     const questionCardRef = useRef(null);
@@ -99,7 +102,21 @@ function StudentExam() {
     }, [navigate]);
 
     useEffect(() => {
-        if (!studentSession) {
+        const loadExamSettings = async () => {
+            try {
+                const settings = await examSettingsService.getExamSettings();
+                setExamSettings(settings);
+                setTimeLeft(settings.exam_duration_minutes * 60);
+            } catch (error) {
+                console.error("Failed to load exam settings, using defaults:", error);
+                // Keep default values if API fails
+            }
+        };
+        loadExamSettings();
+    }, []);
+
+    useEffect(() => {
+        if (!studentSession || !examSettings.question_count) {
             return;
         }
 
@@ -129,7 +146,7 @@ function StudentExam() {
                     return;
                 }
 
-                const selectedQuestions = buildRandomExamQuestions(filteredQuestions, Math.min(MAX_QUESTIONS_PER_EXAM, filteredQuestions.length));
+                const selectedQuestions = buildRandomExamQuestions(filteredQuestions, Math.min(examSettings.question_count, filteredQuestions.length));
 
                 if (!selectedQuestions.length) {
                     toast.error("No active questions are available for the exam right now.");
@@ -142,14 +159,22 @@ function StudentExam() {
                     initialAnswers[question.id] = null;
                 });
 
-                const draftKey = studentMobile ? `examDraft_${studentMobile}` : null;
-                const savedDraft = draftKey ? localStorage.getItem(draftKey) : null;
-                if (savedDraft) {
+                // Restore draft if available
+                const draftKey = studentMobile ? `examDraft_${studentMobile}` : (studentSession?.mobile ? `examDraft_${studentSession.mobile}` : null);
+                if (draftKey) {
                     try {
-                        const draft = JSON.parse(savedDraft);
-                        setAnswers({ ...initialAnswers, ...draft.answers });
-                        if (typeof draft.currentIndex === "number" && draft.currentIndex >= 0 && draft.currentIndex < selectedQuestions.length) {
-                            setCurrentIndex(draft.currentIndex);
+                        const draft = localStorage.getItem(draftKey);
+                        if (draft) {
+                            const draftData = JSON.parse(draft);
+                            if (draftData.studentMobile === studentMobile && draftData.questionsCount === selectedQuestions.length) {
+                                setAnswers(draftData.answers);
+                                setCurrentIndex(draftData.currentIndex);
+                                toast.info("Restored your previous exam session.");
+                            } else {
+                                setAnswers(initialAnswers);
+                            }
+                        } else {
+                            setAnswers(initialAnswers);
                         }
                     } catch (draftError) {
                         console.warn("Unable to restore exam draft:", draftError);
@@ -170,7 +195,7 @@ function StudentExam() {
         };
 
         loadQuestions();
-    }, [navigate, studentSession, studentMobile]);
+    }, [navigate, studentSession, studentMobile, examSettings.question_count]);
 
     useEffect(() => {
         if (!loading && !questions.length) {
@@ -224,7 +249,7 @@ function StudentExam() {
 
         const answeredCount = Object.values(currentAnswers).filter(Boolean).length;
         const percentage = questions.length ? Math.round((score / questions.length) * 100) : 0;
-        const timeTaken = EXAM_DURATION_SECONDS - Math.max(currentTimeLeft, 0);
+        const timeTaken = (examSettings.exam_duration_minutes * 60) - Math.max(currentTimeLeft, 0);
 
         const categoryStats = questions.reduce((stats, question) => {
             const category = question.categoryName || "General";
@@ -338,7 +363,7 @@ const draftKey = studentMobile ? `examDraft_${studentMobile}` : (studentSession?
             toast.error("Failed to submit exam. Please try again.");
             setSubmitting(false);
         }
-    }, [questions, studentMobile, studentSession, submitting, navigate]);
+    }, [questions, studentMobile, studentSession, submitting, navigate, examSettings]);
 
     useEffect(() => {
         if (!questions.length || submitting) {

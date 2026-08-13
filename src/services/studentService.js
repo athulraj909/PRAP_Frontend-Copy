@@ -1,5 +1,10 @@
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
+const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+    return token ? { 'Authorization': `Bearer ${token}` } : {};
+};
+
 export const registerStudentApi = async (formData) => {
     const response = await fetch(`${API_BASE_URL}/student/register/`, {
         method: "POST",
@@ -54,7 +59,9 @@ export const loginStudentApi = async (loginData) => {
 };
 
 export const getStudents = async () => {
-    const response = await fetch(`${API_BASE_URL}/students/`);
+    const response = await fetch(`${API_BASE_URL}/students/`, {
+        headers: getAuthHeaders(),
+    });
     if (!response.ok) {
         throw new Error('Failed to fetch students');
     }
@@ -62,7 +69,12 @@ export const getStudents = async () => {
 };
 
 export const getStudentsByCollege = async (collegeName) => {
-    const response = await fetch(`${API_BASE_URL}/students/?college=${collegeName}`);
+    const response = await fetch(`${API_BASE_URL}/students/?college=${encodeURIComponent(collegeName)}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            ...getAuthHeaders(),
+        },
+    });
     if (!response.ok) {
         throw new Error('Failed to fetch students by college');
     }

@@ -1,25 +1,55 @@
+import { useEffect, useState } from "react";
 import Card from "../../components/common/Card";
+import dashboardService from "../../services/dashboardService";
 
 import "./Dashboard.css";
 
 function Dashboard() {
+    const [stats, setStats] = useState({
+        total_students: 0,
+        total_assessments: 0,
+        total_colleges: 0,
+        hireability_score: "0%"
+    });
+    const [recentActivity, setRecentActivity] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        loadDashboardData();
+    }, []);
+
+    const loadDashboardData = async () => {
+        try {
+            setLoading(true);
+            const [statsData, activityData] = await Promise.all([
+                dashboardService.getDashboardStats(),
+                dashboardService.getRecentActivity()
+            ]);
+            setStats(statsData);
+            setRecentActivity(activityData);
+        } catch (error) {
+            console.error("Failed to load dashboard data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const statistics = [
         {
             title: "Total Students",
-            value: "1,250",
+            value: stats.total_students.toLocaleString(),
         },
         {
             title: "Assessments",
-            value: "320",
+            value: stats.total_assessments.toLocaleString(),
         },
         {
             title: "Colleges",
-            value: "45",
+            value: stats.total_colleges.toLocaleString(),
         },
         {
             title: "Hireability Score",
-            value: "82%",
+            value: stats.hireability_score,
         },
     ];
 
@@ -33,80 +63,77 @@ function Dashboard() {
                 </p>
             </div>
 
-            <div className="dashboard-grid">
+            {loading ? (
+                <div style={{ textAlign: 'center', padding: '40px' }}>
+                    <p>Loading dashboard data...</p>
+                </div>
+            ) : (
+                <>
+                    <div className="dashboard-grid">
 
-                {statistics.map((item) => (
-                    <Card key={item.title}>
+                        {statistics.map((item) => (
+                            <Card key={item.title}>
 
-                        <div className="stat-card">
+                                <div className="stat-card">
 
-                            <h3>{item.title}</h3>
+                                    <h3>{item.title}</h3>
 
-                            <h1>{item.value}</h1>
+                                    <h1>{item.value}</h1>
 
-                        </div>
+                                </div>
 
-                    </Card>
-                ))}
+                            </Card>
+                        ))}
 
-            </div>
+                    </div>
 
-            <div className="dashboard-section">
+                    <div className="dashboard-section">
 
-                <Card>
+                        <Card>
 
-                    <h3>Recent Activity</h3>
+                            <h3>Recent Activity</h3>
 
-                    <table className="dashboard-table">
+                            <table className="dashboard-table">
 
-                        <thead>
+                                <thead>
 
-                            <tr>
-                                <th>Student</th>
-                                <th>Assessment</th>
-                                <th>Status</th>
-                                <th>Score</th>
-                            </tr>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Assessment</th>
+                                        <th>Status</th>
+                                        <th>Score</th>
+                                    </tr>
 
-                        </thead>
+                                </thead>
 
-                        <tbody>
+                                <tbody>
 
-                            <tr>
-                                <td>John Doe</td>
-                                <td>Aptitude Test</td>
-                                <td>Completed</td>
-                                <td>82%</td>
-                            </tr>
+                                    {recentActivity.length > 0 ? (
+                                        recentActivity.map((activity, index) => (
+                                            <tr key={index}>
+                                                <td>{activity.student_name}</td>
+                                                <td>{activity.assessment}</td>
+                                                <td>{activity.status}</td>
+                                                <td>{activity.score}</td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>
+                                                No recent activity
+                                            </td>
+                                        </tr>
+                                    )}
 
-                            <tr>
-                                <td>Rahul Kumar</td>
-                                <td>Communication</td>
-                                <td>Completed</td>
-                                <td>76%</td>
-                            </tr>
+                                </tbody>
 
-                            <tr>
-                                <td>Anjali Nair</td>
-                                <td>Technical Test</td>
-                                <td>Pending</td>
-                                <td>-</td>
-                            </tr>
+                            </table>
 
-                            <tr>
-                                <td>Arun Raj</td>
-                                <td>Logical Reasoning</td>
-                                <td>Completed</td>
-                                <td>91%</td>
-                            </tr>
+                        </Card>
 
-                        </tbody>
-
-                    </table>
-
-                </Card>
-
-            </div>
+                    </div>
+                </>
+            )}
 
         </div>
     );

@@ -44,10 +44,8 @@ function AssessmentNotice() {
             <header className="notice-navbar">
                 <div className="notice-nav-container">
                     <Link to="/student-dashboard" className="notice-logo">
-                        <div className="shield-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                            </svg>
+                        <div className="logo-icon">
+                            <img src="/assets/logo-final.svg" alt="PRAP Logo" />
                         </div>
                         <div className="logo-text">
                             <span className="logo-title">PRAP</span>
