@@ -487,14 +487,12 @@ const draftKey = studentMobile ? `examDraft_${studentMobile}` : (studentSession?
         }
     };
 
-    const hasLoadedRef = useRef(false);
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     useEffect(() => {
-        if (!hasLoadedRef.current) {
-            hasLoadedRef.current = true;
-            return;
-        }
-        scrollQuestionIntoView();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }, [currentIndex]);
 
     const handleJumpToQuestion = (index) => {

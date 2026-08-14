@@ -6,7 +6,7 @@ function ProtectedRoute() {
 
     return isAuthenticated
         ? <Outlet />
-        : <Navigate to="/login" replace />;
+        : <Navigate to="/admin" replace />;
 
 }
 

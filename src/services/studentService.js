@@ -17,7 +17,16 @@ export const registerStudentApi = async (formData) => {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.message || data.error || "Registration failed");
+        let errorMsg = data.message || data.error;
+        if (!errorMsg && typeof data === "object") {
+            const firstKey = Object.keys(data)[0];
+            if (firstKey && Array.isArray(data[firstKey])) {
+                errorMsg = data[firstKey][0];
+            } else if (firstKey && typeof data[firstKey] === "string") {
+                errorMsg = data[firstKey];
+            }
+        }
+        throw new Error(errorMsg || "Registration failed");
     }
 
     // Store tokens if present
