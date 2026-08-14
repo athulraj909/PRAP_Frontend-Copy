@@ -32,12 +32,14 @@ function CrudHeader({
                     </div>
                 )}
 
-                <Button
-                    size="md"
-                    onClick={onAdd}
-                >
-                    {buttonText}
-                </Button>
+                {onAdd && (
+                    <Button
+                        size="md"
+                        onClick={onAdd}
+                    >
+                        {buttonText}
+                    </Button>
+                )}
 
             </div>
 

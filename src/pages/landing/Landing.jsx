@@ -78,6 +78,9 @@ function Landing() {
         { name: "General Aptitude", tag: "BOTH", type: "gray" }
     ];
 
+    const isAdminAuthenticated = !!localStorage.getItem("token");
+    const isStudentAuthenticated = !!localStorage.getItem("studentToken");
+
     return (
         <div className="landing-page">
             {/* Top Navbar */}
@@ -93,12 +96,24 @@ function Landing() {
                         </div>
                     </div>
                     <div className="navbar-actions">
-                        <Link to="/student-assessment?tab=login" className="btn-login-nav">
-                            Login
-                        </Link>
-                        <Link to="/student-assessment" className="btn-take-assessment-nav">
-                            Take Assessment &gt;
-                        </Link>
+                        {isAdminAuthenticated ? (
+                            <Link to="/dashboard" className="btn-take-assessment-nav">
+                                Go to Admin Dashboard &gt;
+                            </Link>
+                        ) : isStudentAuthenticated ? (
+                            <Link to="/student-dashboard" className="btn-take-assessment-nav">
+                                Go to Student Dashboard &gt;
+                            </Link>
+                        ) : (
+                            <>
+                                <Link to="/student-assessment?tab=login" className="btn-login-nav">
+                                    Login
+                                </Link>
+                                <Link to="/student-assessment" className="btn-take-assessment-nav">
+                                    Take Assessment &gt;
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </header>

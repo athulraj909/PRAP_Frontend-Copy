@@ -14,13 +14,21 @@ function StudentDashboard() {
         const session = localStorage.getItem("studentSession");
         if (session) {
             try {
-                setStudent(JSON.parse(session));
-                loadAssessmentCount(JSON.parse(session).mobile);
+                const parsed = JSON.parse(session);
+                setStudent(parsed);
+                if (parsed && parsed.mobile) {
+                    loadAssessmentCount(parsed.mobile);
+                }
             } catch (e) {
                 console.error("Error parsing student session:", e);
+                localStorage.removeItem("studentSession");
+                localStorage.removeItem("studentToken");
+                navigate("/", { replace: true });
             }
+        } else {
+            navigate("/", { replace: true });
         }
-    }, []);
+    }, [navigate]);
 
     const loadAssessmentCount = async (mobile) => {
         try {
@@ -34,8 +42,9 @@ function StudentDashboard() {
 
     const handleLogout = () => {
         localStorage.removeItem("studentSession");
+        localStorage.removeItem("studentToken");
         toast.info("Logged out successfully");
-        navigate("/");
+        navigate("/", { replace: true });
     };
 
     const handleStartAssessment = () => {

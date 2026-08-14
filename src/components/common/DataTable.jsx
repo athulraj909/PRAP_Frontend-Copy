@@ -4,6 +4,8 @@ function DataTable({
     columns = [],
     data = [],
     emptyMessage = "No records found.",
+    rowClick,
+    rowStyle,
 }) {
 
     return (
@@ -51,7 +53,14 @@ function DataTable({
 
                             data.map((row, index) => (
 
-                                <tr key={row.id || index}>
+                                <tr 
+                                    key={row.id || index}
+                                    onClick={() => rowClick && rowClick(row)}
+                                    style={{
+                                        cursor: rowClick ? "pointer" : "default",
+                                        ...(rowStyle ? rowStyle(row) : {})
+                                    }}
+                                >
 
                                     {
                                         columns.map((column) => (

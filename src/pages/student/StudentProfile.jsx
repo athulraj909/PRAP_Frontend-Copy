@@ -23,8 +23,9 @@ function StudentProfile() {
 
     const handleLogout = () => {
         localStorage.removeItem("studentSession");
+        localStorage.removeItem("studentToken");
         toast.info("Logged out successfully");
-        navigate("/");
+        navigate("/", { replace: true });
     };
 
     const handleBackToDashboard = () => {

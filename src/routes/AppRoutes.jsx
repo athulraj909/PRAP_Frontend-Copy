@@ -31,6 +31,7 @@ import StudentList from "../pages/students/StudentList";
 import Settings from "../pages/settings/Settings"
 import CourseList from "../pages/masters/course/CourseList";
 import AssessmentCategoryList from "../pages/masters/assessment-category/AssessmentCategoryList";
+import AssessmentCategoryByType from "../pages/assessments/AssessmentCategoryByType";
 import QuestionList from "../pages/questions/QuestionList";
 
 import NotFound from "../pages/errors/NotFound";
@@ -43,16 +44,16 @@ function AppRoutes() {
 
             <Routes>
 
-                {/* Default - Landing Page */}
-
-                <Route
-                    path="/"
-                    element={<Landing />}
-                />
-
-                {/* Admin Login - Only accessible via /admin */}
-
                 <Route element={<PublicRoute />}>
+
+                    {/* Default - Landing Page */}
+
+                    <Route
+                        path="/"
+                        element={<Landing />}
+                    />
+
+                    {/* Admin Login - Only accessible via /admin */}
 
                     <Route
                         path="/admin"
@@ -178,8 +179,8 @@ function AppRoutes() {
                         {/* ========================= */}
 
                         <Route
-                            path="/assessments"
-                            element={<Dashboard />}
+                            path="/assessments/:type"
+                            element={<AssessmentCategoryByType />}
                         />
 
                         {/* ========================= */}

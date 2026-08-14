@@ -42,8 +42,17 @@ const sidebarMenu = [
 
     {
         title: "Assessments",
-        path: "/assessments",
         icon: "📝",
+        children: [
+            {
+                title: "IT",
+                path: "/assessments/it",
+            },
+            {
+                title: "Non-IT",
+                path: "/assessments/non-it",
+            },
+        ],
     },
 
     {

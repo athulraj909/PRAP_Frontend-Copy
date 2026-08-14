@@ -1,76 +1,9 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import sidebarMenu from "../../config/sidebarMenu";
 
 import "./Sidebar.css";
-
-const menuItems = [
-
-    {
-        title: "Dashboard",
-        path: "/dashboard",
-        icon: "🏠",
-    },
-
-    {
-        title: "Masters",
-        icon: "🗂️",
-        children: [
-
-            {
-                title: "District",
-                path: "/masters/districts",
-            },
-
-            {
-                title: "College",
-                path: "/masters/colleges",
-            },
-
-            {
-                title: "Course",
-                path: "/masters/courses",
-            },
-
-            {
-                title: "Assessment Category",
-                path: "/masters/assessment-categories",
-            },
-
-        ],
-    },
-
-    {
-        title: "Students",
-        path: "/students",
-        icon: "🎓",
-    },
-
-    {
-        title: "Assessments",
-        path: "/assessments",
-        icon: "📝",
-    },
-
-    {
-        title: "Questions",
-        path: "/questions",
-        icon: "❓",
-    },
-
-    {
-        title: "Reports",
-        path: "/reports",
-        icon: "📊",
-    },
-
-    {
-        title: "Settings",
-        path: "/settings",
-        icon: "⚙️",
-    },
-
-];
 
 function Sidebar({
     collapsed,
@@ -84,6 +17,7 @@ function Sidebar({
 
     const [openMenus, setOpenMenus] = useState({
         Masters: true,
+        Assessments: true,
     });
 
     const toggleMenu = (menu) => {
@@ -136,7 +70,7 @@ function Sidebar({
 
                 {
 
-                    menuItems.map((item) => (
+                    sidebarMenu.map((item) => (
 
                         item.children ? (
 

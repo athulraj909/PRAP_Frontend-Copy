@@ -22,31 +22,52 @@ const shuffleArray = (array) => {
     return copy;
 };
 
-const buildRandomExamQuestions = (questions, maxCount) => {
-    const categoryGroups = questions.reduce((groups, question) => {
-        if (!groups[question.categoryName]) {
-            groups[question.categoryName] = [];
-        }
-        groups[question.categoryName].push(question);
-        return groups;
-    }, {});
+const buildRandomExamQuestions = (questions, categoryObjects, maxCount, isItExam = true) => {
+    if (!questions || questions.length === 0) return [];
 
     const selected = [];
     const chosenIds = new Set();
 
-    Object.values(categoryGroups).forEach((group) => {
-        const shuffled = shuffleArray(group);
-        if (shuffled.length > 0) {
-            selected.push(shuffled[0]);
-            chosenIds.add(shuffled[0].id);
-        }
+    // Filter applicable category objects that have questions in the available pool
+    const categoriesWithQuestions = (categoryObjects || []).filter((cat) => {
+        return questions.some(
+            (q) => q.categoryId === cat.id || q.category === cat.id || q.categoryName === cat.categoryName
+        );
     });
 
-    const remaining = shuffleArray(questions.filter((question) => !chosenIds.has(question.id)));
-    while (selected.length < maxCount && remaining.length > 0) {
-        selected.push(remaining.shift());
+    if (categoriesWithQuestions.length > 0) {
+        categoriesWithQuestions.forEach((cat) => {
+            // Determine percentage weightage based on exam type (IT vs Non-IT)
+            const rawPct = isItExam ? cat.itPercentage : cat.nonItPercentage;
+            const catPct = rawPct !== undefined && rawPct !== null && rawPct > 0
+                ? rawPct
+                : (cat.percentage && cat.percentage > 0 ? cat.percentage : (100 / categoriesWithQuestions.length));
+            
+            const targetCount = Math.max(1, Math.round((catPct / 100) * maxCount));
+
+            // Get questions belonging to this category
+            const catQuestions = shuffleArray(
+                questions.filter(
+                    (q) => (q.categoryId === cat.id || q.category === cat.id || q.categoryName === cat.categoryName) && !chosenIds.has(q.id)
+                )
+            );
+
+            // Pick up to targetCount questions
+            const picked = catQuestions.slice(0, targetCount);
+            picked.forEach((q) => {
+                selected.push(q);
+                chosenIds.add(q.id);
+            });
+        });
     }
 
+    // Top up remaining questions up to maxCount from remaining available questions if needed
+    const remainingQuestions = shuffleArray(questions.filter((q) => !chosenIds.has(q.id)));
+    while (selected.length < maxCount && remainingQuestions.length > 0) {
+        selected.push(remainingQuestions.shift());
+    }
+
+    // Return randomly shuffled questions
     return shuffleArray(selected.slice(0, maxCount));
 };
 
@@ -129,11 +150,10 @@ function StudentExam() {
                 const studentCourse = studentSession?.course || "";
                 const applicableCategories = getApplicableCategoriesForCourse(studentCourse);
 
-                // Get category names for the applicable types
+                // Get category objects for applicable types
                 const categories = await assessmentCategoryService.getAssessmentCategories();
-                const applicableCategoryNames = categories
-                    .filter(cat => applicableCategories.includes(cat.applicableTo))
-                    .map(cat => cat.categoryName);
+                const applicableCategoryObjects = categories.filter(cat => applicableCategories.includes(cat.applicableTo));
+                const applicableCategoryNames = applicableCategoryObjects.map(cat => cat.categoryName);
 
                 // Filter questions by applicable categories
                 const filteredQuestions = activeQuestions.filter(question => 
@@ -146,7 +166,14 @@ function StudentExam() {
                     return;
                 }
 
-                const selectedQuestions = buildRandomExamQuestions(filteredQuestions, Math.min(examSettings.question_count, filteredQuestions.length));
+                const isItExam = applicableCategories.includes("IT");
+
+                const selectedQuestions = buildRandomExamQuestions(
+                    filteredQuestions,
+                    applicableCategoryObjects,
+                    Math.min(examSettings.question_count, filteredQuestions.length),
+                    isItExam
+                );
 
                 if (!selectedQuestions.length) {
                     toast.error("No active questions are available for the exam right now.");
